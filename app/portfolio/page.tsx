@@ -7,10 +7,10 @@ import { FaTwitter, FaGlobe } from "react-icons/fa"
 const portfolioItems = [
   {
     id: 1,
-    title: "Memecoin Logo 1",
-    image: "/placeholder.svg?height=300&width=300",
-    projectLogo: "/placeholder.svg?height=50&width=50",
-    socialLink: "https://twitter.com/example1",
+    title: "Crazzzy Monsters",
+    image: "/Portfolio_CM.png",
+    projectLogo: "/Logo round black.png?height=50&width=50",
+    socialLink: "https://x.com/CrazzzyMonsters",
     socialType: "twitter",
   },
   {
