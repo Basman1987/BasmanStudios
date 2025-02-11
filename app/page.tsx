@@ -22,7 +22,7 @@ export default function Home() {
         className="relative w-full max-w-2xl aspect-video mb-12"
       >
         <Image
-          src="/placeholder.svg?height=720&width=1280"
+          src="/Basman_Studios2.png?height=720&width=1280"
           alt="Animated example of BASMAN STUDIO'S work"
           layout="fill"
           objectFit="cover"
