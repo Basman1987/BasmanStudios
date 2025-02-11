@@ -3,7 +3,12 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { FaSpinner, FaCopy } from "react-icons/fa"
-import MemoryGame from "../components/MemoryGame"
+import dynamic from "next/dynamic"
+
+const MemoryGame = dynamic(() => import("../components/MemoryGame"), {
+  ssr: false,
+  loading: () => <p>Loading...</p>,
+})
 
 const nicknames = [
   "RugPull Ricky",
@@ -33,6 +38,16 @@ export default function Fun() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [copied, setCopied] = useState(false)
   const [selectedGame, setSelectedGame] = useState("nickname")
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   const generateNickname = () => {
     setIsGenerating(true)
@@ -43,7 +58,7 @@ export default function Fun() {
       const randomNickname = nicknames[Math.floor(Math.random() * nicknames.length)]
       setNickname(randomNickname)
       setIsGenerating(false)
-    }, 3000)
+    }, 1000)
   }
 
   const copyToClipboard = () => {
@@ -54,7 +69,6 @@ export default function Fun() {
   }
 
   useEffect(() => {
-    // Reset copied state when nickname changes
     setCopied(false)
   }, [])
 
@@ -80,7 +94,7 @@ export default function Fun() {
           className="bg-gray-800 text-white py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-500 cyberpunk-glow"
         >
           <option value="nickname">Nickname Generator</option>
-          <option value="memory">Memory Game</option>
+          {!isMobile && <option value="memory">Memory Game</option>}
         </select>
       </motion.div>
       {selectedGame === "nickname" ? (
@@ -122,7 +136,7 @@ export default function Fun() {
           )}
         </div>
       ) : (
-        <MemoryGame />
+        !isMobile && <MemoryGame />
       )}
     </div>
   )
