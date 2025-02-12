@@ -22,11 +22,13 @@ export default function Home() {
         className="relative w-full max-w-2xl aspect-video mb-12"
       >
         <Image
-          src="Basman_Studios2.gif?height=720&width=1280"
-          alt="Animated example of BASMAN STUDIO'S work"
+          src="/placeholder.svg"
+          alt="Animated example of BASMAN STUDIOS work"
           layout="fill"
           objectFit="cover"
           className="rounded-lg shadow-2xl cyberpunk-glow"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          priority
         />
       </motion.div>
       <motion.p
