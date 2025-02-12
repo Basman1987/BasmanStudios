@@ -5,13 +5,13 @@ import Image from "next/image"
 
 const partners = [
   {
-    id: 1,
+  id: 1,
     name: "Crazzzy Monsters",
     logo: "/Logo round black.webp?height=100&width=100",
     testimonial: "BASMAN Studios delivered amazing logos, banners and marketing posters that perfectly captured our project's essence. He also made our great Discord server with great security.",
   },
   {
-    id: 2,
+id: 2,
     name: "Frog & Friends",
     logo: "/Frog_500.webp?height=100&width=100",
     testimonial: "The marketing materials created by BASMAN Studios helped us a lot! He also created our logo and the art for our website landingpage.",
@@ -19,13 +19,13 @@ const partners = [
   {
     id: 3,
     name: "NFT Collection 3",
-    logo: "/placeholder.svg?height=100&width=100",
+    logo: "/placeholder.svg",
     testimonial: "Our collection stood out thanks to the incredible artwork from BASMAN Studios.",
   },
   {
     id: 4,
     name: "DeFi Platform 4",
-    logo: "/placeholder.svg?height=100&width=100",
+    logo: "/placeholder.svg",
     testimonial: "BASMAN Studios understood our vision and translated it into a stunning visual identity.",
   },
 ]
@@ -57,6 +57,7 @@ export default function Partners() {
                 width={50}
                 height={50}
                 className="rounded-full mr-4"
+                loading="lazy"
               />
               <h2 className="text-2xl font-semibold cyberpunk-text-glow">{partner.name}</h2>
             </div>
