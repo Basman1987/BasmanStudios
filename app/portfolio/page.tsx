@@ -8,8 +8,8 @@ const portfolioItems = [
   {
     id: 1,
     title: "Crazzzy Monsters",
-    image: "/Portfolio_CM.png",
-    projectLogo: "/Logo round black.png?height=50&width=50",
+    image: "/Portfolio_1200x1200_cm.webp",
+    projectLogo: "/Logo_CM.svg?height=50&width=50",
     socialLink: "https://x.com/CrazzzyMonsters",
     socialType: "twitter",
   },
@@ -17,9 +17,9 @@ const portfolioItems = [
     id: 2,
     title: "X Banner 1",
     image: "/placeholder.svg?height=300&width=600",
-    projectLogo: "/placeholder.svg?height=50&width=50",
-    socialLink: "https://example1.com",
-    socialType: "website",
+    projectLogo: "/Frog_500.svg?height=50&width=50",
+    socialLink: "https://x.com/FriendlyFrog100",
+    socialType: "twitter",
   },
   {
     id: 3,
