@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 import Navigation from "./components/Navigation"
 import Footer from "./components/Footer"
 import CyberRain from "./components/CyberRain"
+import FontLoader from "./components/FontLoader"
 import type React from "react"
 import Script from "next/script"
 
@@ -31,16 +32,9 @@ export default function RootLayout({
           as="style"
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
         />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-          media="print"
-          onLoad={(event) => {
-            ;(event.target as HTMLLinkElement).media = "all"
-          }}
-        />
       </head>
       <body className={`${inter.className} bg-black text-white min-h-screen flex flex-col`}>
+        <FontLoader />
         <div className="flex-grow relative overflow-hidden">
           <div className="neon-background"></div>
           <CyberRain />
