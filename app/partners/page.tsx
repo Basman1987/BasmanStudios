@@ -6,15 +6,15 @@ import Image from "next/image"
 const partners = [
   {
     id: 1,
-    name: "CryptoProject 1",
-    logo: "/placeholder.svg?height=100&width=100",
-    testimonial: "BASMAN Studios delivered an amazing logo that perfectly captured our project's essence.",
+    name: "Crazzzy Monsters",
+    logo: "/Logo round black.webp?height=100&width=100",
+    testimonial: "BASMAN Studios delivered amazing logos, banners and marketing posters that perfectly captured our project's essence. He also made our great Discord server with great security.",
   },
   {
     id: 2,
-    name: "MemeToken 2",
-    logo: "/placeholder.svg?height=100&width=100",
-    testimonial: "The marketing materials created by BASMAN Studios helped us go viral!",
+    name: "Frog & Friends",
+    logo: "/Frog_500.webp?height=100&width=100",
+    testimonial: "The marketing materials created by BASMAN Studios helped us a lot! He also created our logo and the art for our website landingpage.",
   },
   {
     id: 3,
