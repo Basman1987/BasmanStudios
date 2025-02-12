@@ -19,37 +19,37 @@ const portfolioItems = [
     image: "/placeholder.svg?height=300&width=600",
     projectLogo: "/Frog_500.svg?height=50&width=50",
     socialLink: "https://x.com/FriendlyFrog100",
-    socialType: "twitter",
+    socialType: "twitter", 
   },
   {
     id: 3,
     title: "Marketing Poster 1",
-    image: "/placeholder.svg?height=400&width=300",
-    projectLogo: "/placeholder.svg?height=50&width=50",
+    image: "/placeholder.svg",
+    projectLogo: "/placeholder.svg",
     socialLink: "https://twitter.com/example2",
     socialType: "twitter",
   },
   {
     id: 4,
     title: "Memecoin Logo 2",
-    image: "/placeholder.svg?height=300&width=300",
-    projectLogo: "/placeholder.svg?height=50&width=50",
+    image: "/placeholder.svg",
+    projectLogo: "/placeholder.svg",
     socialLink: "https://example2.com",
     socialType: "website",
   },
   {
     id: 5,
     title: "X Banner 2",
-    image: "/placeholder.svg?height=300&width=600",
-    projectLogo: "/placeholder.svg?height=50&width=50",
+    image: "/placeholder.svg",
+    projectLogo: "/placeholder.svg",
     socialLink: "https://twitter.com/example3",
     socialType: "twitter",
   },
   {
     id: 6,
     title: "Marketing Poster 2",
-    image: "/placeholder.svg?height=400&width=300",
-    projectLogo: "/placeholder.svg?height=50&width=50",
+    image: "/placeholder.svg",
+    projectLogo: "/placeholder.svg",
     socialLink: "https://example3.com",
     socialType: "website",
   },
@@ -76,7 +76,14 @@ export default function Portfolio() {
             className="bg-gray-900 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 cyberpunk-glow"
           >
             <div className="relative aspect-square">
-              <Image src={item.image || "/placeholder.svg"} alt={item.title} layout="fill" objectFit="cover" />
+              <Image
+                src={item.image || "/placeholder.svg"}
+                alt={item.title}
+                layout="fill"
+                objectFit="cover"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                loading="lazy"
+              />
             </div>
             <div className="p-4">
               <h3 className="text-xl font-semibold mb-4 cyberpunk-text-glow">{item.title}</h3>
@@ -88,6 +95,7 @@ export default function Portfolio() {
                       alt={`${item.title} logo`}
                       width={32}
                       height={32}
+                      loading="lazy"
                     />
                   </div>
                   <a
