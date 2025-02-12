@@ -15,8 +15,8 @@ const portfolioItems = [
   },
   {
     id: 2,
-    title: "X Banner 1",
-    image: "/placeholder.svg?height=300&width=600",
+    title: "Frog & Friends",
+    image: "/Portfolio_1200x1200_frog.webp?height=300&width=600",
     projectLogo: "/Frog_500.svg?height=50&width=50",
     socialLink: "https://x.com/FriendlyFrog100",
     socialType: "twitter", 
