@@ -1,9 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { useState, useEffect, useCallback } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { FaSpinner, FaCopy } from "react-icons/fa"
 import dynamic from "next/dynamic"
+import { useIsIOS } from "../components/PlatformCheck"
 
 const MemoryGame = dynamic(() => import("../components/MemoryGame"), {
   ssr: false,
@@ -39,6 +40,7 @@ export default function Fun() {
   const [copied, setCopied] = useState(false)
   const [selectedGame, setSelectedGame] = useState("nickname")
   const [isMobile, setIsMobile] = useState(false)
+  const isIOS = useIsIOS()
 
   useEffect(() => {
     const checkMobile = () => {
@@ -49,36 +51,35 @@ export default function Fun() {
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
-  const generateNickname = () => {
+  const generateNickname = useCallback(() => {
     setIsGenerating(true)
     setNickname("")
     setCopied(false)
 
+    // Simulate a delay for better UX on fast devices
     setTimeout(() => {
       const randomNickname = nicknames[Math.floor(Math.random() * nicknames.length)]
       setNickname(randomNickname)
       setIsGenerating(false)
-    }, 1000)
-  }
+    }, 500)
+  }, [])
 
-  const copyToClipboard = () => {
+  const copyToClipboard = useCallback(() => {
     navigator.clipboard.writeText(nickname).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     })
-  }
-
-  useEffect(() => {
-    setCopied(false)
-  }, [])
+  }, [nickname])
 
   return (
-    <div className="min-h-screen py-24 px-4 sm:px-6 lg:px-8 pt-16 pb-20 flex flex-col items-center justify-center">
+    <div
+      className={`min-h-screen py-16 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center ${isIOS ? "ios-specific-class" : ""}`}
+    >
       <motion.h1
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-4xl sm:text-5xl font-bold text-center mb-12 cyberpunk-text-glow gradient-text"
+        className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-8 cyberpunk-text-glow gradient-text"
       >
         Crypto Fun Zone
       </motion.h1>
@@ -86,24 +87,24 @@ export default function Fun() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="mb-8"
+        className="mb-8 w-full max-w-xs"
       >
         <select
           value={selectedGame}
           onChange={(e) => setSelectedGame(e.target.value)}
-          className="bg-gray-800 text-white py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-500 cyberpunk-glow"
+          className="w-full bg-gray-800 text-white py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-500 cyberpunk-glow"
         >
           <option value="nickname">Nickname Generator</option>
           {!isMobile && <option value="memory">Memory Game</option>}
         </select>
       </motion.div>
       {selectedGame === "nickname" ? (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center w-full max-w-md">
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xl text-center mb-8 cyberpunk-text-glow"
+            className="text-lg sm:text-xl text-center mb-6 cyberpunk-text-glow"
           >
             Generate your unique crazy crypto-related nickname. Let's see who you really are!
           </motion.p>
@@ -113,27 +114,31 @@ export default function Fun() {
             transition={{ duration: 0.5, delay: 0.4 }}
             onClick={generateNickname}
             disabled={isGenerating}
-            className="bg-gradient-to-r from-pink-500 to-blue-500 text-white font-bold py-3 px-6 rounded-full text-lg hover:from-pink-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl cyberpunk-glow mb-8"
+            className="w-full sm:w-auto bg-gradient-to-r from-pink-500 to-blue-500 text-white font-bold py-3 px-6 rounded-full text-lg hover:from-pink-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl cyberpunk-glow mb-6"
           >
             {isGenerating ? <FaSpinner className="animate-spin text-2xl mx-auto" /> : "Generate Nickname"}
           </motion.button>
-          {nickname && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="bg-gray-900 p-6 rounded-lg shadow-lg cyberpunk-glow text-center"
-            >
-              <h2 className="text-2xl font-bold mb-4 cyberpunk-text-glow">{nickname}</h2>
-              <button
-                onClick={copyToClipboard}
-                className="flex items-center justify-center space-x-2 bg-gray-800 text-white py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300"
+          <AnimatePresence mode="wait">
+            {nickname && (
+              <motion.div
+                key={nickname}
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.5 }}
+                transition={{ duration: 0.3 }}
+                className="bg-gray-900 p-6 rounded-lg shadow-lg cyberpunk-glow text-center w-full"
               >
-                <FaCopy />
-                <span>{copied ? "Copied!" : "Copy to Clipboard"}</span>
-              </button>
-            </motion.div>
-          )}
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 cyberpunk-text-glow break-words">{nickname}</h2>
+                <button
+                  onClick={copyToClipboard}
+                  className="flex items-center justify-center space-x-2 bg-gray-800 text-white py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 w-full"
+                >
+                  <FaCopy />
+                  <span>{copied ? "Copied!" : "Copy to Clipboard"}</span>
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       ) : (
         !isMobile && <MemoryGame />
