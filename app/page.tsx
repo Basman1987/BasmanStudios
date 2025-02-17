@@ -22,11 +22,13 @@ export default function Home() {
         className="relative w-full max-w-2xl aspect-video mb-12"
       >
         <Image
-          src="Basman_Studios2.gif?height=720&width=1280"
-          alt="Animated example of BASMAN STUDIO'S work"
+          src="/placeholder.svg"
+          alt="Animated example of BASMAN STUDIOS work"
           layout="fill"
           objectFit="cover"
           className="rounded-lg shadow-2xl cyberpunk-glow"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          priority
         />
       </motion.div>
       <motion.p
@@ -42,13 +44,33 @@ export default function Home() {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.6 }}
+        className="flex flex-col items-center"
       >
         <Link
           href="/portfolio"
-          className="bg-gradient-to-r from-pink-500 to-blue-500 text-white font-bold py-3 px-6 rounded-full text-lg hover:from-pink-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl cyberpunk-glow"
+          className="bg-gradient-to-r from-pink-500 to-blue-500 text-white font-bold py-3 px-6 rounded-full text-lg hover:from-pink-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl cyberpunk-glow mb-8"
         >
           Get Started
         </Link>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
+          className="max-w-2xl text-sm text-gray-400 text-center cyberpunk-text-glow"
+        >
+          <p className="mb-4">
+            At <strong>Basman Studios</strong>, I create art, websites, and designs for various projects. However, I am{" "}
+            <strong>not accountable</strong> for the actions, intentions, or outcomes of these projects. Always{" "}
+            <strong>Do Your Own Research (DYOR)</strong> before engaging with any project. Nothing on this site should
+            be considered <strong>financial advice</strong>.
+          </p>
+          <p className="mb-4">
+            When a client hires me for a paid job, I do my best to review the project, but I{" "}
+            <strong>cannot be held responsible</strong> if they use the artwork, website, or designs for malicious or
+            unethical purposes.
+          </p>
+          <p className="font-bold">Stay safe—Web3 is wild.</p>
+        </motion.div>
       </motion.div>
     </div>
   )
