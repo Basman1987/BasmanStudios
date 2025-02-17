@@ -35,15 +35,17 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
         />
       </head>
-      <body className={`${inter.className} bg-black text-white min-h-screen flex flex-col`}>
+      <body className={`${inter.className} bg-black text-white`}>
         <FontLoader />
-        <div className="flex-grow relative overflow-hidden">
-          <div className="neon-background"></div>
-          <CyberRain />
+        <div className="flex flex-col min-h-screen">
           <Navigation />
-          <main className="relative z-10 pt-16 pb-safe">{children}</main>
+          <main className="flex-grow relative z-10">
+            <div className="neon-background"></div>
+            <CyberRain />
+            {children}
+          </main>
+          <Footer />
         </div>
-        <Footer />
         <Script id="ios-vh-fix" strategy="afterInteractive">
           {`
             function setVH() {
