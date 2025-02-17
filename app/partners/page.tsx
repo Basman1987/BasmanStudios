@@ -18,9 +18,9 @@ id: 2,
   },
   {
     id: 3,
-    name: "NFT Collection 3",
-    logo: "/placeholder.svg",
-    testimonial: "Our collection stood out thanks to the incredible artwork from BASMAN Studios.",
+    name: "Aristo Wolves",
+    logo: "/Aristo_Logo.webp",
+    testimonial: "Our marketing materials and logo stood out thanks to the incredible artwork from BASMAN Studios.",
   },
   {
     id: 4,
