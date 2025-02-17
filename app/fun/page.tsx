@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { FaSpinner, FaCopy } from "react-icons/fa"
 import dynamic from "next/dynamic"
-import { useIsIOS } from "../components/PlatformCheck"
+import { useIsIOS, useIOSVersion } from "../components/PlatformCheck"
 
 const MemoryGame = dynamic(() => import("../components/MemoryGame"), {
   ssr: false,
@@ -41,6 +41,8 @@ export default function Fun() {
   const [selectedGame, setSelectedGame] = useState("nickname")
   const [isMobile, setIsMobile] = useState(false)
   const isIOS = useIsIOS()
+  const iOSVersion = useIOSVersion()
+  const generateButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -56,12 +58,14 @@ export default function Fun() {
     setNickname("")
     setCopied(false)
 
-    // Simulate a delay for better UX on fast devices
-    setTimeout(() => {
-      const randomNickname = nicknames[Math.floor(Math.random() * nicknames.length)]
-      setNickname(randomNickname)
-      setIsGenerating(false)
-    }, 500)
+    // Use requestAnimationFrame for smoother animation on iOS
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const randomNickname = nicknames[Math.floor(Math.random() * nicknames.length)]
+        setNickname(randomNickname)
+        setIsGenerating(false)
+      }, 500)
+    })
   }, [])
 
   const copyToClipboard = useCallback(() => {
@@ -71,10 +75,17 @@ export default function Fun() {
     })
   }, [nickname])
 
+  useEffect(() => {
+    if (isIOS && generateButtonRef.current) {
+      generateButtonRef.current.addEventListener("touchstart", (e) => e.preventDefault(), { passive: false })
+    }
+  }, [isIOS])
+
+  const iosClass = isIOS ? "ios-specific-class" : ""
+  const iosButtonClass = isIOS ? "active:opacity-75" : ""
+
   return (
-    <div
-      className={`min-h-screen py-16 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center ${isIOS ? "ios-specific-class" : ""}`}
-    >
+    <div className={`min-h-screen py-16 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center ${iosClass}`}>
       <motion.h1
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -109,12 +120,13 @@ export default function Fun() {
             Generate your unique crazy crypto-related nickname. Let's see who you really are!
           </motion.p>
           <motion.button
+            ref={generateButtonRef}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
             onClick={generateNickname}
             disabled={isGenerating}
-            className="w-full sm:w-auto bg-gradient-to-r from-pink-500 to-blue-500 text-white font-bold py-3 px-6 rounded-full text-lg hover:from-pink-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl cyberpunk-glow mb-6"
+            className={`w-full sm:w-auto bg-gradient-to-r from-pink-500 to-blue-500 text-white font-bold py-3 px-6 rounded-full text-lg hover:from-pink-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl cyberpunk-glow mb-6 ${iosButtonClass}`}
           >
             {isGenerating ? <FaSpinner className="animate-spin text-2xl mx-auto" /> : "Generate Nickname"}
           </motion.button>
@@ -131,7 +143,7 @@ export default function Fun() {
                 <h2 className="text-xl sm:text-2xl font-bold mb-4 cyberpunk-text-glow break-words">{nickname}</h2>
                 <button
                   onClick={copyToClipboard}
-                  className="flex items-center justify-center space-x-2 bg-gray-800 text-white py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 w-full"
+                  className={`flex items-center justify-center space-x-2 bg-gray-800 text-white py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 w-full ${iosButtonClass}`}
                 >
                   <FaCopy />
                   <span>{copied ? "Copied!" : "Copy to Clipboard"}</span>
