@@ -5,11 +5,18 @@
 :root {
   --neon-pink: #ff00ff;
   --neon-blue: #00ffff;
+  --vh: 1vh;
 }
 
 body {
   background-color: #000;
   color: #fff;
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
+  -webkit-overflow-scrolling: touch;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .neon-background {
@@ -94,6 +101,13 @@ body {
   color: transparent;
 }
 
+/* iOS-specific styles */
+@supports (-webkit-touch-callout: none) {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
 /* Optimize animations for mobile */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -108,3 +122,12 @@ body {
     transition-delay: 0s !important;
   }
 }
+
+/* Improve touch interactions */
+@media (hover: none) and (pointer: coarse) {
+  .cyberpunk-glow,
+  .cyberpunk-text-glow {
+    transition: none !important;
+  }
+}
+
