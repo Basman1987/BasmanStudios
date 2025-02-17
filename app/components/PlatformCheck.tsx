@@ -2,14 +2,25 @@
 
 import { useEffect, useState } from "react"
 
-export function useIsIOS() {
-  const [isIOS, setIsIOS] = useState(false)
+export function useIOSVersion() {
+  const [iOSVersion, setIOSVersion] = useState<number | null>(null)
 
   useEffect(() => {
     const userAgent = window.navigator.userAgent.toLowerCase()
-    setIsIOS(/iphone|ipad|ipod/.test(userAgent))
+    const isIOS = /iphone|ipad|ipod/.test(userAgent)
+    if (isIOS) {
+      const match = userAgent.match(/os (\d+)_/)
+      if (match && match[1]) {
+        setIOSVersion(Number.parseInt(match[1], 10))
+      }
+    }
   }, [])
 
-  return isIOS
+  return iOSVersion
+}
+
+export function useIsIOS() {
+  const iOSVersion = useIOSVersion()
+  return iOSVersion !== null
 }
 
