@@ -24,9 +24,9 @@ id: 2,
   },
   {
     id: 4,
-    name: "DeFi Platform 4",
-    logo: "/placeholder.svg",
-    testimonial: "BASMAN Studios understood our vision and translated it into a stunning visual identity.",
+    name: "Pure Liquid Gold",
+    logo: "/Beer_Logo.webp",
+    testimonial: "BASMAN Studios understood our vision and translated it into a stunning visuals and made our well organized discord.",
   },
 ]
 
